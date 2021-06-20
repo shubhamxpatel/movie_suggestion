@@ -1,0 +1,3 @@
+[submodule "app1"]
+	path = app1
+	url = https://github.com/shubhamxpatel/app1.git

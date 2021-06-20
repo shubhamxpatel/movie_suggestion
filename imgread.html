@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <img id="img" src="/car.jpg" alt="" height="400" width="400">
+    <canvas id="canvas" height="400" width="400"></canvas>
+    <input type="number" name="num" id="num" onchange="get()" value="10">
+    <input type="file" name="file" id="file" onchange="setimg()">
+</body>
+<script>
+    window.onload = function() {
+
+        var c = document.getElementById("canvas");
+        var ctx = c.getContext("2d");
+        var img = document.getElementById("img")
+        ctx.drawImage(img, 0, 0, 400, 400)
+        get()
+
+
+        // document.getElementById("p").innerText = x1
+
+
+
+    }
+
+    function setimg() {
+        let img = document.getElementById("img")
+        let reader = new FileReader()
+        reader.onload = function() {
+            //console.log(reader.result)
+            img.src = reader.result
+            get()
+        }
+        reader.readAsDataURL(document.getElementById("file").files[0])
+    }
+
+    function get() {
+        var c = document.getElementById("canvas");
+        var ctx = c.getContext("2d");
+        var img = document.getElementById("img")
+        ctx.drawImage(img, 0, 0, 400, 400)
+        var x = ctx.getImageData(0, 0, 400, 400);
+        var x1 = x;
+        for (let i = 0; i < x.data.length; i += 4) {
+            let avg = (x.data[i] + x.data[i + 1] + x.data[i + 2]) / 3
+            if (i + 5 < x.data.length) {
+                let avg1 = (x.data[i + 5] + x.data[i + 6] + x.data[i + 7]) / 3
+                if (Math.abs(avg - avg1) * 4 <= document.getElementById("num").value) {
+                    x1.data[i] = 255
+                    x1.data[i + 1] = 255
+                    x1.data[i + 2] = 255
+                    x1.data[i + 4] = 255;
+                } else {
+                    x1.data[i] = 0;
+                    x1.data[i + 1] = 0;
+                    x1.data[i + 2] = 0;
+                    x1.data[i + 4] = 255;
+                }
+            }
+
+        }
+        // x = x1
+        // for (let i = 0; i < x.data.length; i += 4) {
+        //     let avg = (x.data[i] + x.data[i + 1] + x.data[i + 2]) / 3
+        //     if (i + 5 < x.data.length) {
+        //         let avg1 = (x.data[i + 5] + x.data[i + 6] + x.data[i + 7]) / 3
+        //         if (Math.abs(avg - avg1) <= document.getElementById("num").value) {
+        //             x1.data[i] = 255
+        //             x1.data[i + 1] = 255
+        //             x1.data[i + 2] = 255
+        //             x1.data[i + 4] = 255;
+        //         } else {
+        //             x1.data[i] = 0;
+        //             x1.data[i + 1] = 0;
+        //             x1.data[i + 2] = 0;
+        //             x1.data[i + 4] = 255;
+        //         }
+        //     }
+
+        // }
+
+        console.log(x1)
+        ctx.putImageData(x1, 0, 0)
+    }
+</script>
+
+
+</html>
