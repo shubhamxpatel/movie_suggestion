@@ -6,12 +6,14 @@ import fs from 'fs'
 import Movie from './Movie.jsx'
 import './movie.js'
 import { BrowserRouter, HashRouter } from 'react-router-dom'
+export const contextapi=React.createContext({})
 
 const App1 = () => {
     
     const [logged, setLogged]=useState(1)
     const [auth,setauth]=useState(1)
     const [data1, setdata1] = useState([])
+    
 
     
     useEffect(() => {
@@ -35,7 +37,7 @@ const App1 = () => {
             {/* <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Login/> */}
 
-            <HashRouter basename="/app1" >
+            <HashRouter basename="/" >
                 <Switch>
                 <Route exact  path="/user/:id" /*component={Card} /*render={()=>{<Card handler={setLogged}/>}}/*/ >
                     <Card handler={setLogged} />
@@ -56,3 +58,4 @@ const App1 = () => {
 }
 
 export default App1;
+

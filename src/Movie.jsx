@@ -1,10 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useContext,useLocation } from 'react'
 import { useState } from 'react';
-import {Link} from 'react-router-dom'
-
+import {Link, useHistory} from 'react-router-dom'
+import { useLocalStorage } from 'react-use';
+import {contextapi} from './App1.jsx'
 
 const Movie = (props) => {
     let data = 0
+    //const history=useHistory()
+    //const location=useLocation()
+    //history.push(location)
+    
+    const context=useContext(contextapi)
+    if(!(window.location.href in context))
+    {
+        context[window.location.href]=1;
+    }
+    console.log(context)
+
 
     const [rest, setrest] = useState({})
   //  document.body.style.visibility = "hidden"

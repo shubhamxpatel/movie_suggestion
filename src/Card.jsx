@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useContext, useEffect, useState } from 'react';
 import './App.css'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
@@ -12,9 +12,16 @@ import axios from 'axios'
 import { Home } from '@material-ui/icons';
 import { useHistory } from 'react-router';
 import {Link} from 'react-router-dom'
+import {contextapi} from './App1.jsx'
 
 
 function Card(props) {
+    const context=useContext(contextapi)
+    if(!(window.location.href in context))
+    {
+        context[window.location.href]=1;
+    }
+    console.log(context)
 
     //document.body.style.visibility = "hidden"
     console.log(window.location)
@@ -95,7 +102,7 @@ function Card(props) {
     }
     window.onresize=function(){
         if(document.getElementById("main") && document.getElementById("nav")){
-        document.getElementById("main").style.height=`${window.innerHeight+document.getElementById("nav").offsetHeight-20} px`
+        document.getElementById("main").style.height=`${window.innerHeight-document.getElementById("nav").offsetHeight-20}px`
     }
 }
 
